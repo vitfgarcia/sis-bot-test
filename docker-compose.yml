@@ -1,0 +1,27 @@
+#==========================================================
+# @author: Vitor Ferreira Garcia <vitfgarcia@gmail.com>
+# @version: 0.1.0
+#
+# @description: Compose for simple node.js api with mongodb
+#==========================================================
+version: '3.7'
+
+services:
+  mongo:
+    image: mongo:4.0
+    container_name: mongo
+    ports:
+      - 27017:27017
+    restart: always
+  app:
+    build:
+      context: .
+    container_name: api
+    ports:
+      - 8000:8000
+    environment:
+      PORT: 8000
+      DB_CONNECTION: mongodb://mongo:27017/BotApi
+    restart: always
+    depends_on:
+      - mongo
